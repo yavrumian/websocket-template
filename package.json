@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,17 @@
   "bugs": {
     "url": "https://github.com/yavrumian/websocket-template/issues"
   },
-  "homepage": "https://github.com/yavrumian/websocket-template#readme"
+  "homepage": "https://github.com/yavrumian/websocket-template#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.3.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.4.1",
+    "mongoose": "^4.13.20",
+    "socket.io": "^2.3.0"
+  }
 }
