@@ -1,4 +1,6 @@
-const auth = require('./auth')
+const auth = require('./auth'),
+	dataChange = require('./dataChange'),
+	tempChange = require('./tempChange')
 
 
 module.exports = (io, sess) => {
@@ -9,10 +11,11 @@ module.exports = (io, sess) => {
 		sess(socket.request, socket.request.res, next);
 	});
 
-	// browser.use((socket, next) =>{
-	// 	if(socket.request.session._id) next()
-	// 	else socket.disconnect()
-	// })
+	browser.use((socket, next) =>{
+		console.log(socket.request.session);
+		if(socket.request.session._id)	next()
+		else socket.disconnect()
+	})
 	//
 	// pi.use((socket, next) => {
 	// 	// if(socket.handshake.query.secret != process.env.secret) socket.disconnect()
@@ -23,6 +26,7 @@ module.exports = (io, sess) => {
 
 	browser.on('connection', socket => {
 		console.log('Connected to browser namspace');
+		dataChange(socket, pi)
 	 })
 
 	pi.on('connection', socket => {
@@ -32,6 +36,7 @@ module.exports = (io, sess) => {
 			return next()
 		})
 		console.log('Connected to pi namespace');
-		auth(socket)
+		auth(socket);
+		tempChange(socket, browser)
 	})
 }

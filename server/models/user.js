@@ -2,6 +2,8 @@ const mongoose = require('mongoose'),
 	bcrypt = require('bcrypt'),
 	_ = require('lodash'),
 
+	Term = require('../models/term'),
+
 	saltRounds = 10
 const UserSchema = new mongoose.Schema({
   username: {
@@ -20,6 +22,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre('save', async function(next) {
 	const user = this;
 	try {
+		await new Term({user: user._id}).save()
 		const hash = await bcrypt.hash(user.password, saltRounds)
 		user.password = hash
 		next();
@@ -28,6 +31,8 @@ UserSchema.pre('save', async function(next) {
 	}
 
 })
+
+
 
 UserSchema.statics.auth = async function(username, password){
 	try{
